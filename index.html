@@ -179,6 +179,7 @@
     <!-- Live Data JSON Output Window -->
     <h3>Map Schema Output (JSON)</h3>
     <script>
+    <script>
         // System Engine State Data Configuration
         let currentMode = 'edit';
         let currentBrush = { type: 'Combat', level: 1 };
@@ -394,8 +395,8 @@
                     }
                     element.innerHTML = innerContent;
                     
-                    element.addEventListener('click', (e) => {
-                        e.preventDefault();
+                    // FIXED: Removed e.preventDefault() so clicks pass through normally now!
+                    element.addEventListener('click', () => {
                         handleNodeInteraction(r, c);
                     });
                     
