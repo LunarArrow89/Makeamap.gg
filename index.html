@@ -85,7 +85,7 @@
         }
         .node-main { font-size: 11px; line-height: 1.2; text-transform: uppercase; }
         .node-sub { font-size: 9px; opacity: 0.75; margin-top: 1px; }
-        .node-rolled { font-size: 9px; color: #ffd60a; margin-top: 2px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 120px; }
+        .node-rolled { font-size: 15px; color: #ffd60a; margin-top: 2px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 120px; }
 
         .node-target.Empty { background: #2c2c2e; color: #8e8e93; border: 2px dashed #48484a; box-shadow: none; }
         .node-target.Combat { background: #ff453a; color: white; }
@@ -198,6 +198,7 @@
         
         let monsterPools = JSON.parse(localStorage.getItem('koder_monster_pools')) || defaultMonsterPools;
         let mapData = [];
+        let currentSaveSlot = 1;
 
         // Load map structure history configuration if present
         function loadSavedProjectState() {
