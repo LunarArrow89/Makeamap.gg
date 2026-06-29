@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" style="--grid-cols: 5; --grid-rows: 3;"><head><script src="/_sdk/telemetry_sdk.js"></script>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Koder Sandboxed Map Engine</title>
@@ -11,9 +12,10 @@
         }
         body { 
             background: #121212; color: #fff; 
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             margin: 0; padding: calc(10px + var(--safe-top)) 12px 15px 12px; 
             -webkit-tap-highlight-color: transparent; 
+            box-sizing: border-box;
         }
         h2 { margin: 0 0 10px 0; font-size: 18px; text-align: center; font-weight: 700; }
         
@@ -23,17 +25,18 @@
         .io-grid { grid-template-columns: repeat(3, 1fr); }
         
         .palette-grid { grid-template-columns: repeat(3, 1fr); background: #1c1c1e; padding: 6px; border-radius: 10px; border: 1px solid #2c2c2e; display: grid; }
-        .palette-grid button { font-size: 11px; padding: 8px 2px; text-transform: uppercase; }
+        .palette-grid button { font-size: 11px; padding: 8px 2px; text-transform: uppercase; margin: 2px; }
         
         button, .node-target { 
             touch-action: manipulation !important;
             -webkit-appearance: none !important;
             user-select: none !important;
+            cursor: pointer;
         }
         
         button {
             background: #2c2c2e; color: white; border: none; padding: 12px 2px; 
-            border-radius: 8px; font-weight: 700; font-size: 12px; 
+            border-radius: 8px; font-weight: 700; font-size: 12px; transition: background 0.2s ease;
         }
         button.active { background: #00bcd4; color: #000; }
         
@@ -104,335 +107,167 @@
             font-family: monospace; height: 100px; overflow-y: auto; color: #30d158; 
             font-size: 11px; border: 1px solid #2c2c2e; box-sizing: border-box; margin-bottom: 10px;
         }
-        .deck-editor-card { background: #1c1c1e; border: 1px solid #2c2c2e; padding: 12px; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; }
-        .deck-select-row { display: flex; gap: 8px; margin-bottom: 8px; }
-        .deck-select-row select { flex: 1; background: #2c2c2e; color: #fff; border: 1px solid #48484a; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 13px; }
-        .deck-editor-card textarea { height: 110px; color: #fff; background: #000; }
         
         h3 { font-size: 11px; margin: 10px 0 4px 0; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(100,210,255,0.6); } 70% { box-shadow: 0 0 0 10px rgba(100,210,255,0); } 100% { box-shadow: 0 0 0 0 rgba(100,210,255,0); } }
     </style>
-<script src="/_sdk/resizing_sdk.js"></script></head>
-<body data-html-import-id="html-import-0" data-template-id="__page-root" style="background: rgb(18, 18, 18);">
+</head>
+<body>
 
-    <h2 data-html-import-id="html-import-1" data-template-id="h2-0" class="canva-text" style="color: rgb(255, 255, 255); font-weight: 700; font-size: 18px;">📱 Custom Deck Map Studio (Koder Fixed)</h2>
+    <h2>📱 Custom Deck Map Studio</h2>
     
-    <div class="grid-menu modes-grid canva-container" data-html-import-id="html-import-2" data-template-id="div-1" style="background: rgb(34, 34, 34);">
-        <button id="btn-edit" class="active canva-button" onclick="setMode('edit')" data-html-import-id="html-import-3" data-template-id="button-2" style="background: rgb(0, 188, 212); color: rgb(0, 0, 0); font-weight: 700; font-size: 12px;">✏️ Paint Blocks</button>
-        <button id="btn-link" onclick="setMode('link')" data-html-import-id="html-import-4" data-template-id="button-3" class="canva-button" style="background: rgb(44, 44, 46); color: rgb(255, 255, 255); font-weight: 700; font-size: 12px;">🔗 Link Paths</button>
-        <button id="btn-play" onclick="setMode('play')" data-html-import-id="html-import-5" data-template-id="button-4" class="canva-button" style="background: rgb(44, 44, 46); color: rgb(255, 255, 255); font-weight: 700; font-size: 12px;">🎮 Playtest</button>
-    </div>
-    <div id="paint-palette" class="grid-menu palette-grid canva-container" data-html-import-id="html-import-6" data-template-id="div-5" style="background: rgb(28, 28, 30);">
-        <button id="brush-Combat-1" class="active canva-button" onclick="selectBrush('Combat', 1)" data-html-import-id="html-import-7" data-template-id="button-6" style="background: rgb(255, 69, 58); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">⚔️ ENEMY L1</button>
-        <button id="brush-Combat-3" onclick="selectBrush('Combat', 3)" data-html-import-id="html-import-8" data-template-id="button-7" class="canva-button" style="background: rgb(44, 44, 46); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">⚔️ ENEMY L3</button>
-        <button id="brush-Combat-5" onclick="selectBrush('Combat', 5)" data-html-import-id="html-import-9" data-template-id="button-8" class="canva-button" style="background: rgb(44, 44, 46); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">⚔️ ENEMY L5</button>
-        <button id="brush-Elite-1" onclick="selectBrush('Elite', 1)" data-html-import-id="html-import-10" data-template-id="button-9" class="canva-button" style="background: rgb(44, 44, 46); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">👹 ELITE L1</button>
-        <button id="brush-Elite-3" onclick="selectBrush('Elite', 3)" data-html-import-id="html-import-11" data-template-id="button-10" class="canva-button" style="background: rgb(44, 44, 46); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">👹 ELITE L3</button>
-        <button id="brush-Elite-5" onclick="selectBrush('Elite', 5)" data-html-import-id="html-import-12" data-template-id="button-11" class="canva-button" style="background: rgb(44, 44, 46); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">👹 ELITE L5</button>
-        <button id="brush-Mystery" onclick="selectBrush('Mystery', 1)" data-html-import-id="html-import-13" data-template-id="button-12" class="canva-button" style="background: rgb(44, 44, 46); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">❓ EVENT</button>
-        <button id="brush-Shop" onclick="selectBrush('Shop', 1)" data-html-import-id="html-import-14" data-template-id="button-13" class="canva-button" style="background: rgb(44, 44, 46); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">🛒 SHOP</button>
-        <button id="brush-Boss" onclick="selectBrush('Boss', 1)" data-html-import-id="html-import-15" data-template-id="button-14" class="canva-button" style="background: rgb(44, 44, 46); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;">💀 BOSS</button>
-        <button id="brush-Empty" style="grid-column: span 3; background: rgb(34, 34, 34); color: rgb(255, 255, 255); font-weight: 700; font-size: 11px;" onclick="selectBrush('Empty', 1)" data-html-import-id="html-import-16" data-template-id="button-15" class="canva-button">❌ ERASER (CLEAR NODE)</button>
+    <!-- Control Tabs -->
+    <div class="grid-menu modes-grid">
+        <button id="btn-edit" class="active" onclick="setMode('edit')">✏️ Paint Blocks</button>
+        <button id="btn-link" onclick="setMode('link')">🔗 Link Paths</button>
+        <button id="btn-play" onclick="setMode('play')">🎮 Playtest</button>
     </div>
 
-    <div class="grid-menu size-grid" data-html-import-id="html-import-17">
-        <button onclick="changeDimensions('col', 1)" style="background: rgb(10, 132, 255); color: rgb(255, 255, 255); font-weight: 700; font-size: 12px;" data-html-import-id="html-import-18" data-template-id="button-16" class="canva-button">➕ Col</button>
-        <button onclick="changeDimensions('col', -1)" style="background: rgb(0, 64, 221); color: rgb(255, 255, 255); font-weight: 700; font-size: 12px;" data-html-import-id="html-import-19" data-template-id="button-17" class="canva-button">➖ Col</button>
-        <button onclick="changeDimensions('row', 1)" style="background: rgb(191, 90, 242); color: rgb(255, 255, 255); font-weight: 700; font-size: 12px;" data-html-import-id="html-import-20" data-template-id="button-18" class="canva-button">➕ Row</button>
-        <button onclick="changeDimensions('row', -1)" style="background: rgb(122, 31, 162); color: rgb(255, 255, 255); font-weight: 700; font-size: 12px;" data-html-import-id="html-import-21" data-template-id="button-19" class="canva-button">➖ Row</button>
+    <!-- Paint Palette Grid -->
+    <div id="paint-palette" class="grid-menu palette-grid">
+        <button id="brush-Combat-1" class="active" onclick="selectBrush('Combat', 1)">Combat Lvl 1</button>
+        <button id="brush-Combat-3" onclick="selectBrush('Combat', 3)">Combat Lvl 3</button>
+        <button id="brush-Combat-5" onclick="selectBrush('Combat', 5)">Combat Lvl 5</button>
+        <button id="brush-Elite-1" onclick="selectBrush('Elite', 1)">Elite Lvl 1</button>
+        <button id="brush-Elite-3" onclick="selectBrush('Elite', 3)">Elite Lvl 3</button>
+        <button id="brush-Elite-5" onclick="selectBrush('Elite', 5)">Elite Lvl 5</button>
+        <button id="brush-Mystery" onclick="selectBrush('Mystery', null)">Mystery</button>
+        <button id="brush-Shop" onclick="selectBrush('Shop', null)">Shop</button>
+        <button id="brush-Boss" onclick="selectBrush('Boss', null)">Boss</button>
+        <button id="brush-Empty" onclick="selectBrush('Empty', null)">Empty</button>
     </div>
 
-    <div class="grid-menu io-grid" data-html-import-id="html-import-22">
-        <button onclick="exportMapJson()" style="background: rgb(36, 138, 61); color: rgb(255, 255, 255); font-weight: 700; font-size: 12px;" data-html-import-id="html-import-23" data-template-id="button-20" class="canva-button">💾 Save</button>
-        <button onclick="importMapJson()" style="background: rgb(224, 108, 0); color: rgb(255, 255, 255); font-weight: 700; font-size: 12px;" data-html-import-id="html-import-24" data-template-id="button-21" class="canva-button">📂 Load</button>
-        <button onclick="resetPlayer()" style="background: rgb(255, 59, 48); color: rgb(255, 255, 255); font-weight: 700; font-size: 12px;" data-html-import-id="html-import-25" data-template-id="button-22" class="canva-button">🔄 Reset</button>
+    <!-- Dynamic Interactive Map View -->
+    <div id="map-outer-wrapper">
+        <div id="map-container"></div>
     </div>
 
-    <div id="map-outer-wrapper" data-html-import-id="html-import-26" data-template-id="div-23" class="canva-container" style="background: rgb(0, 0, 0);">
-        <div id="map-container" data-html-import-id="html-import-27"><div id="n_0_0" class="node-target Empty canva-container" data-node-id="n_0_0" data-html-import-id="html-import-28" data-template-id="div-24" style="grid-area: 1 / 1; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-29" data-template-id="span-25" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-30"></span></div><div id="n_1_0" class="node-target Empty canva-container" data-node-id="n_1_0" data-html-import-id="html-import-31" data-template-id="div-26" style="grid-area: 1 / 2; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-32" data-template-id="span-27" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-33"></span></div><div id="n_2_0" class="node-target Empty canva-container" data-node-id="n_2_0" data-html-import-id="html-import-34" data-template-id="div-28" style="grid-area: 1 / 3; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-35" data-template-id="span-29" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-36"></span></div><div id="n_3_0" class="node-target Empty canva-container" data-node-id="n_3_0" data-html-import-id="html-import-37" data-template-id="div-30" style="grid-area: 1 / 4; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-38" data-template-id="span-31" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-39"></span></div><div id="n_4_0" class="node-target Empty canva-container" data-node-id="n_4_0" data-html-import-id="html-import-40" data-template-id="div-32" style="grid-area: 1 / 5; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-41" data-template-id="span-33" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-42"></span></div><div id="n_0_1" class="node-target Combat canva-container" data-node-id="n_0_1" data-html-import-id="html-import-43" data-template-id="div-34" style="grid-area: 2 / 1; background: rgb(255, 69, 58); color: rgb(255, 255, 255); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-44" data-template-id="span-35" style="color: rgb(255, 255, 255); font-size: 11px;">Combat</span><span class="node-sub canva-text" data-html-import-id="html-import-45" data-template-id="span-36" style="color: rgb(255, 255, 255); font-size: 9px;">Lv. 1</span></div><div id="n_1_1" class="node-target Empty canva-container" data-node-id="n_1_1" data-html-import-id="html-import-46" data-template-id="div-37" style="grid-area: 2 / 2; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-47" data-template-id="span-38" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-48"></span></div><div id="n_2_1" class="node-target Empty canva-container" data-node-id="n_2_1" data-html-import-id="html-import-49" data-template-id="div-39" style="grid-area: 2 / 3; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-50" data-template-id="span-40" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-51"></span></div><div id="n_3_1" class="node-target Empty canva-container" data-node-id="n_3_1" data-html-import-id="html-import-52" data-template-id="div-41" style="grid-area: 2 / 4; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-53" data-template-id="span-42" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-54"></span></div><div id="n_4_1" class="node-target Empty canva-container" data-node-id="n_4_1" data-html-import-id="html-import-55" data-template-id="div-43" style="grid-area: 2 / 5; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-56" data-template-id="span-44" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-57"></span></div><div id="n_0_2" class="node-target Empty canva-container" data-node-id="n_0_2" data-html-import-id="html-import-58" data-template-id="div-45" style="grid-area: 3 / 1; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-59" data-template-id="span-46" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-60"></span></div><div id="n_1_2" class="node-target Empty canva-container" data-node-id="n_1_2" data-html-import-id="html-import-61" data-template-id="div-47" style="grid-area: 3 / 2; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-62" data-template-id="span-48" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-63"></span></div><div id="n_2_2" class="node-target Empty canva-container" data-node-id="n_2_2" data-html-import-id="html-import-64" data-template-id="div-49" style="grid-area: 3 / 3; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-65" data-template-id="span-50" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-66"></span></div><div id="n_3_2" class="node-target Empty canva-container" data-node-id="n_3_2" data-html-import-id="html-import-67" data-template-id="div-51" style="grid-area: 3 / 4; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-68" data-template-id="span-52" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-69"></span></div><div id="n_4_2" class="node-target Empty canva-container" data-node-id="n_4_2" data-html-import-id="html-import-70" data-template-id="div-53" style="grid-area: 3 / 5; background: rgb(44, 44, 46); color: rgb(142, 142, 147); font-weight: 700;"><span class="node-main canva-text" data-html-import-id="html-import-71" data-template-id="span-54" style="color: rgb(142, 142, 147); font-size: 11px;">➕</span><span class="node-sub" data-html-import-id="html-import-72"></span></div></div>
-    </div>
+    <!-- Console Logging Window -->
+    <h3>System Console Logs</h3>
+    <div id="log">Engine fully loaded. Select a painting mode above to start sculpting your grid layout.</div>
 
-    <h3 data-html-import-id="html-import-73" data-template-id="h3-55" class="canva-text" style="color: rgb(142, 142, 147); font-size: 11px;">📝 LIVE DECK EDITOR (COMMA-SEPARATED)</h3>
-    <div class="deck-editor-card canva-container" data-html-import-id="html-import-74" data-template-id="div-56" style="background: rgb(28, 28, 30);">
-        <div class="deck-select-row" data-html-import-id="html-import-75">
-            <select id="deck-selector" onchange="loadDeckToTextarea()" data-html-import-id="html-import-76" data-template-id="select-57" class="canva-input" style="background: rgb(44, 44, 46); color: rgb(255, 255, 255); font-weight: 700; font-size: 13px;">
-                <option value="Combat_1" data-html-import-id="html-import-77" data-template-id="option-58" style="color: rgb(255, 255, 255);">Standard Enemy - Level 1</option>
-                <option value="Combat_2" data-html-import-id="html-import-78" data-template-id="option-59" style="color: rgb(255, 255, 255);">Standard Enemy - Level 2</option>
-                <option value="Combat_3" data-html-import-id="html-import-79" data-template-id="option-60" style="color: rgb(255, 255, 255);">Standard Enemy - Level 3</option>
-                <option value="Combat_4" data-html-import-id="html-import-80" data-template-id="option-61" style="color: rgb(255, 255, 255);">Standard Enemy - Level 4</option>
-                <option value="Combat_5" data-html-import-id="html-import-81" data-template-id="option-62" style="color: rgb(255, 255, 255);">Standard Enemy - Level 5</option>
-                <option value="Elite_1" data-html-import-id="html-import-82" data-template-id="option-63" style="color: rgb(255, 255, 255);">Elite Enemy - Level 1</option>
-                <option value="Elite_2" data-html-import-id="html-import-83" data-template-id="option-64" style="color: rgb(255, 255, 255);">Elite Enemy - Level 2</option>
-                <option value="Elite_3" data-html-import-id="html-import-84" data-template-id="option-65" style="color: rgb(255, 255, 255);">Elite Enemy - Level 3</option>
-                <option value="Elite_4" data-html-import-id="html-import-85" data-template-id="option-66" style="color: rgb(255, 255, 255);">Elite Enemy - Level 4</option>
-                <option value="Elite_5" data-html-import-id="html-import-86" data-template-id="option-67" style="color: rgb(255, 255, 255);">Elite Enemy - Level 5</option>
-                <option value="Boss" data-html-import-id="html-import-87" data-template-id="option-68" style="color: rgb(255, 255, 255);">Boss Encounter Pool</option>
-            </select>
-            <button onclick="saveTextareaToDeck()" style="background: rgb(48, 209, 88); color: rgb(0, 0, 0); padding: 0px 15px; font-weight: 700; font-size: 12px;" data-html-import-id="html-import-88" data-template-id="button-69" class="canva-button">💾 Apply</button>
-        </div>
-        <textarea id="deck-input-box" data-html-import-id="html-import-89" data-template-id="textarea-70" class="canva-input" style="background: rgb(0, 0, 0); color: rgb(255, 255, 255); font-family: monospace; font-size: 11px;"></textarea>
-    </div>
+    <!-- Live Data JSON Output Window -->
+    <h3>Map Schema Output (JSON)</h3>
+    <textarea id="json-output" readonly placeholder="Interactive JSON generation schema will render inside here..."></textarea>
 
-    <h3 data-html-import-id="html-import-90" data-template-id="h3-71" class="canva-text" style="color: rgb(142, 142, 147); font-size: 11px;">📜 LOG CONSOLE</h3>
-    <div id="log" data-html-import-id="html-import-91" data-template-id="div-72" class="canva-container" style="background: rgb(0, 0, 0); color: rgb(48, 209, 88); font-family: monospace; font-size: 11px;">&gt; Listening directly to touch coordinates via Global Bubble Interceptor.</div>
-
-    <h3 data-html-import-id="html-import-92" data-template-id="h3-73" class="canva-text" style="color: rgb(142, 142, 147); font-size: 11px;">🗺️ DATA INTERCHANGE NODE</h3>
-    <textarea id="json-io-box" placeholder="Tap Save to extract data text structure..." data-html-import-id="html-import-93" data-template-id="textarea-74" class="canva-input" style="background: rgb(28, 28, 30); color: rgb(100, 210, 255); font-family: monospace; font-size: 11px;"></textarea>
-
-    <script data-html-import-id="html-import-94">
-        const NODE_TYPES = ['Empty', 'Combat', 'Elite', 'Mystery', 'Shop', 'Boss'];
+<script>
+        // System Engine State Data Configuration
+        let currentMode = 'edit';
+        let currentBrush = { type: 'Combat', level: 1 };
+        const gridCols = 5;
+        const gridRows = 3;
         
-        let ENEMY_TIERS = {
-            Combat: {
-                1: ["Green Slime", "Blue Louse", "Wandering Cultist"],
-                2: ["Jaw Worm", "Fungi Beast Duo", "Red Mask Bandit"],
-                3: ["Sentry Sphere", "Constrictor Viper", "Fire Slime Herd"],
-                4: ["Quartz Golem", "Cavern Parasite", "Shadow Stalker"],
-                5: ["Plasma Arch-Mage", "Corrupted Hatchling", "Ironclad Automaton"]
-            },
-            Elite: {
-                1: ["Gremlin Nob", "Lagavulin Sentinal"],
-                2: ["Triple Sentries", "Book of Stabbing"],
-                3: ["Giant Head Nemesis", "Reptomancer Dagger"],
-                4: ["Transient Ghost Weaver", "Magma Wyvern Duo"],
-                5: ["Void Champion Phantom", "Awakened Spawn"]
-            },
-            Boss: ["The Awakened One", "Donu & Deca", "Time Eater", "Corrupted Heart"]
-        };
-
-        const RANDOM_POOLS = {
-            Mystery: ["💎 Found Golden Chest!", "🎭 Shifty Clown Jester", "🍎 Foraged Wild Berries", "💨 Spike Wall Trap!"],
-            Shop: ["💳 Cleanse Curse Shop", "🧪 Ancient Strength Potion", "💍 Rare Merchant Relic"]
-        };
-
-        let currentMode = 'edit', linkSourceNodeId = null, playerCurrentNodeId = null;
-        let activeBrushType = 'Combat', activeBrushLevel = 1;
-        let totalCols = 5, totalRows = 3;
-        let mapData = {};
-
-        function initMapStructure() {
-            mapData = {};
-            buildMatrixData();
-            mapData['n_0_1'].type = 'Combat';
-            syncDisplayGrid();
-            mountGlobalTouchInterceptor();
-        }
-
-        function buildMatrixData() {
-            for (let c = 0; c < 30; c++) {
-                for (let r = 0; r < 20; r++) {
-                    const id = `n_${c}_${r}`;
-                    if (!mapData[id]) {
-                        mapData[id] = { id: id, col: c, row: r, type: 'Empty', level: 1, connections: [] };
-                    }
-                }
-            }
-        }
-        function changeDimensions(type, Delta) {
-            if (type === 'col') {
-                if (totalCols + Delta < 2 || totalCols + Delta > 30) return;
-                totalCols += Delta;
-            } else {
-                if (totalRows + Delta < 1 || totalRows + Delta > 20) return;
-                totalRows += Delta;
-            }
-            
-            Object.values(mapData).forEach(node => {
-                if (node.col >= totalCols || node.row >= totalRows) {
-                    node.type = 'Empty';
-                    node.connections = [];
-                }
-                node.connections = node.connections.filter(targetId => {
-                    const t = mapData[targetId];
-                    return t && t.col < totalCols && t.row < totalRows;
+        // Setup structural memory matrix map
+        let mapData = [];
+        for (let r = 0; r < gridRows; r++) {
+            let rowArray = [];
+            for (let c = 0; c < gridCols; c++) {
+                rowArray.push({
+                    id: `node-${r}-${c}`,
+                    row: r,
+                    col: c,
+                    type: 'Empty',
+                    level: null,
+                    links: []
                 });
-            });
-
-            if (playerCurrentNodeId) {
-                const p = mapData[playerCurrentNodeId];
-                if (p.col >= totalCols || p.row >= totalRows) playerCurrentNodeId = null;
             }
-
-            syncDisplayGrid();
-            log(`Dimensions changed: ${totalCols}x${totalRows}`);
+            mapData.push(rowArray);
         }
 
-        function syncDisplayGrid() {
-            document.documentElement.style.setProperty('--grid-cols', totalCols);
-            document.documentElement.style.setProperty('--grid-rows', totalRows);
-            
-            const container = document.getElementById('map-container');
-            container.innerHTML = ''; 
+        // Initialize Core Structural Elements
+        const mapContainer = document.getElementById('map-container');
+        document.documentElement.style.setProperty('--grid-cols', gridCols);
+        document.documentElement.style.setProperty('--grid-rows', gridRows);
 
-            for (let r = 0; r < totalRows; r++) {
-                for (let c = 0; c < totalCols; c++) {
-                    const id = `n_${c}_${r}`;
-                    const node = mapData[id];
-                    
-                    const div = document.createElement('div');
-                    div.id = id;
-                    div.className = `node-target ${node.type}`;
-                    div.style.gridColumn = c + 1;
-                    div.style.gridRow = r + 1;
-                    div.setAttribute('data-node-id', id);
-                    
-                    let mainText = node.type === 'Empty' ? '➕' : node.type;
-                    let subText = (node.type === 'Combat' || node.type === 'Elite') ? `Lv. ${node.level}` : "";
-                    
-                    let pathText = "";
-                    if (node.connections.length > 0) {
-                        const legiblePaths = node.connections.map(targetId => {
-                            const t = mapData[targetId];
-                            return t ? `(${t.col + 1},${t.row + 1})` : '';
-                        }).join(' ');
-                        pathText = `<span class="path-indicator">➡️ ${legiblePaths}</span>`;
-                    }
-
-                    div.innerHTML = `<span class="node-main">${mainText}</span><span class="node-sub">${subText}</span>${pathText}`;
-
-                    if (currentMode === 'play') {
-                        if (playerCurrentNodeId === id) div.classList.add('current');
-                        else if (isNodeSelectable(id)) div.classList.add('selectable');
-                    }
-                    container.appendChild(div);
-                }
-            }
-        }
-
-        function mountGlobalTouchInterceptor() {
-            const container = document.getElementById('map-container');
-            
-            // Bypasses Koder framework preview blocks via dynamic bubble processing
-            container.addEventListener('click', function(e) {
-                let targetNode = e.target;
-                while (targetNode && targetNode !== container) {
-                    if (targetNode.hasAttribute('data-node-id')) {
-                        const nodeId = targetNode.getAttribute('data-node-id');
-                        handleNodeClick(nodeId);
-                        break;
-                    }
-                    targetNode = targetNode.parentNode;
-                }
-            });
-        }
-        function handleNodeClick(id) {
-            const node = mapData[id];
-            if (!node) return;
-
-            if (currentMode === 'edit') {
-                node.type = activeBrushType;
-                node.level = activeBrushLevel;
-                if (node.type === 'Empty') {
-                    node.connections = [];
-                    Object.values(mapData).forEach(n => { n.connections = n.connections.filter(c => c !== id); });
-                }
-                log(`Painted cell matrix point: (${node.col + 1}, ${node.row + 1})`);
-                syncDisplayGrid();
-            } 
-            else if (currentMode === 'link') {
-                if (node.type === 'Empty') return log("Can't link empty slots.");
-                if (!linkSourceNodeId) {
-                    linkSourceNodeId = id;
-                    const el = document.getElementById(id);
-                    if (el) el.style.borderColor = '#ff9500';
-                } else {
-                    if (linkSourceNodeId === id) { linkSourceNodeId = null; syncDisplayGrid(); return; }
-                    const sourceNode = mapData[linkSourceNodeId];
-                    if (Math.abs(node.col - sourceNode.col) <= 1 && Math.abs(node.row - sourceNode.row) <= 1) {
-                        if (!sourceNode.connections.includes(id)) sourceNode.connections.push(id);
-                        else sourceNode.connections = sourceNode.connections.filter(c => c !== id);
-                    } else { log("Out of bounds. Links must be 8-directional adjacent cells."); }
-                    linkSourceNodeId = null; syncDisplayGrid();
-                }
-            } 
-            else if (currentMode === 'play') {
-                if (node.type === 'Empty') return;
-                if (playerCurrentNodeId === null) {
-                    if (node.col === 0) executeNodeTrigger(node);
-                    else log("Start journey at a Column 1 node.");
-                } else { if (isNodeSelectable(id)) executeNodeTrigger(node); }
-            }
-        }
-
-        function executeNodeTrigger(node) {
-            playerCurrentNodeId = node.id;
-            syncDisplayGrid();
-            
-            if (node.type === 'Combat' || node.type === 'Elite') {
-                const activePool = ENEMY_TIERS[node.type][node.level];
-                log(`[⚔️ col ${node.col+1} - Tier ${node.level}] Encounter: <strong>${activePool[Math.floor(Math.random() * activePool.length)]}</strong>`);
-            } else if (node.type === 'Boss') {
-                log(`[💀 BOSS ENCOUNTER] Rolled: <strong>${ENEMY_TIERS.Boss[Math.floor(Math.random() * ENEMY_TIERS.Boss.length)]}</strong>`);
-            } else {
-                const genericPool = RANDOM_POOLS[node.type];
-                if (genericPool) {
-                    log(`[🎰 col ${node.col+1}] Event: <strong>${genericPool[Math.floor(Math.random() * genericPool.length)]}</strong>`);
-                } else { log(`[Entered col ${node.col+1}]`); }
-            }
-        }
-
-        function isNodeSelectable(targetId) {
-            if (playerCurrentNodeId === null) return mapData[targetId].col === 0;
-            return mapData[playerCurrentNodeId].connections.includes(targetId);
-        }
-
-        function selectBrush(type, level) {
-            activeBrushType = type; activeBrushLevel = level;
-            document.querySelectorAll('.palette-grid button').forEach(b => b.classList.remove('active'));
-            let btnId = `brush-${type}`;
-            if (type === 'Combat' || type === 'Elite') btnId += `-${level}`;
-            const targetBtn = document.getElementById(btnId);
-            if (targetBtn) targetBtn.classList.add('active');
-            log(`Tool: [${type} ${type==='Combat'||type==='Elite'? 'Lv.'+level : ''}]`);
+        function logMessage(msg) {
+            const logBox = document.getElementById('log');
+            logBox.innerHTML += `<br>> ${msg}`;
+            logBox.scrollTop = logBox.scrollHeight;
         }
 
         function setMode(mode) {
-            currentMode = mode; linkSourceNodeId = null;
+            currentMode = mode;
             document.querySelectorAll('.modes-grid button').forEach(b => b.classList.remove('active'));
-            const targetModeBtn = document.getElementById(`btn-${mode}`);
-            if (targetModeBtn) targetModeBtn.classList.add('active');
+            
+            const modeBtn = document.getElementById(`btn-${mode}`);
+            if (modeBtn) modeBtn.classList.add('active');
             
             const palette = document.getElementById('paint-palette');
-            if (palette) palette.style.display = (mode === 'edit') ? 'grid' : 'none';
+            if (mode === 'edit') {
+                palette.style.display = 'grid';
+            } else {
+                palette.style.display = 'none';
+            }
+            logMessage(`Switched mode profile over to: ${mode.toUpperCase()}`);
+            renderMapGrid();
+        }
+
+        function selectBrush(type, level) {
+            currentBrush = { type, level };
+            document.querySelectorAll('.palette-grid button').forEach(b => b.classList.remove('active'));
             
-            log(`Mode changed: ${mode.toUpperCase()}`);
-            syncDisplayGrid(); 
+            let targetId = `brush-${type}`;
+            if(level) targetId += `-${level}`;
+            
+            const activeBtn = document.getElementById(targetId);
+            if(activeBtn) activeBtn.classList.add('active');
+            logMessage(`Active tool updated to: ${type} ${level ? '(Lvl ' + level + ')' : ''}`);
         }
 
-        function loadDeckToTextarea() {
-            const selectedKey = document.getElementById('deck-selector').value;
-            const textfield = document.getElementById('deck-input-box');
-            if (selectedKey === 'Boss') { textfield.value = ENEMY_TIERS.Boss.join(', '); } 
-            else { const parts = selectedKey.split('_'); textfield.value = ENEMY_TIERS[parts][parts].join(', '); }
+        // Handle structural block interactions
+        function handleNodeInteraction(row, col) {
+            let targetNode = mapData[row][col];
+            
+            if (currentMode === 'edit') {
+                targetNode.type = currentBrush.type;
+                targetNode.level = currentBrush.level;
+                logMessage(`Painted Node [${row},${col}] as ${targetNode.type}`);
+            } 
+            else if (currentMode === 'link') {
+                logMessage(`Link logic requested for Node [${row},${col}]`);
+            } 
+            else if (currentMode === 'playtest') {
+                logMessage(`Playtesting interaction structural trace at Node [${row},${col}]`);
+            }
+            
+            renderMapGrid();
+            updateJSONDisplay();
         }
 
-        function saveTextareaToDeck() {
-            const selectedKey = document.getElementById('deck-selector').value;
-            const items = document.getElementById('deck-input-box').value.split(',').map(s => s.trim()).filter(s => s.length > 0);
-            if (items.length === 0) return log("❌ Error: List pool empty.");
-            if (selectedKey === 'Boss') { ENEMY_TIERS.Boss = items; } 
-            else { const parts = selectedKey.split('_'); ENEMY_TIERS[parts][parts] = items; }
-            log(`✏️ Saved updates for: [${selectedKey}]!`);
+        function updateJSONDisplay() {
+            document.getElementById('json-output').value = JSON.stringify(mapData, null, 2);
         }
 
-        function resetPlayer() { playerCurrentNodeId = null; log("Progression reset."); syncDisplayGrid(); }
-        function exportMapJson() { document.getElementById('json-io-box').value = JSON.stringify({ totalCols, totalRows, ENEMY_TIERS, mapData }, null, 2); log("🎉 Saved!"); }
-        
-        function importMapJson() {
-            const textData = document.getElementById('json-io-box').value.trim(); if (!textData) return;
-            try {
-                const parsed = JSON.parse(textData);
-                if (parsed.mapData) {
-                    totalCols = parsed.totalCols || 5; totalRows = parsed.totalRows || 3; mapData = parsed.mapData;
-                    if (parsed.ENEMY_TIERS) ENEMY_TIERS = parsed.ENEMY_TIERS;
-                    playerCurrentNodeId = null; setMode('edit'); loadDeckToTextarea(); syncDisplayGrid(); log("📂 Loaded!");
+        // UI Builder Rendering Logic Pipeline
+        function renderMapGrid() {
+            mapContainer.innerHTML = '';
+            for (let r = 0; r < gridRows; r++) {
+                for (let c = 0; c < gridCols; c++) {
+                    const node = mapData[r][c];
+                    const element = document.createElement('div');
+                    element.className = `node-target ${node.type}`;
+                    element.id = node.id;
+                    
+                    let innerContent = `<div class="node-main">${node.type}</div>`;
+                    if(node.level) {
+                        innerContent += `<div class="node-sub">LVL ${node.level}</div>`;
+                    }
+                    element.innerHTML = innerContent;
+                    
+                    // Unified Touch + Click Event Hook Integration
+                    element.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        handleNodeInteraction(r, c);
+                    });
+                    
+                    mapContainer.appendChild(element);
                 }
-            } catch (e) { log(`❌ Import Error.`); }
+            }
         }
 
-        initMapStructure();
-        loadDeckToTextarea();
+        // Run Initial Build Configuration Setup
+        renderMapGrid();
+        updateJSONDisplay();
     </script>
-
-
-<script src="/_sdk/editing_sdk.js"></script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1378b156565432f',t:'MTc4Mjc2MzQ5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
+</body>
+</html>
