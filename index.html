@@ -446,8 +446,14 @@ function saveProjectStateToStorage() {
                     
                     // Fixed: Safe scoped loop indexes to guarantee clicks map to the accurate block
                     (function(row, col) {
-                        element.onclick = function() {
-                            handleNodeInteraction(row, col);
+element.addEventListener("click", () => {
+    handleNodeInteraction(row, col);
+});
+
+element.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    handleNodeInteraction(row, col);
+});
                         };
                     })(r, c);
                     
