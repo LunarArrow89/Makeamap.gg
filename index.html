@@ -217,12 +217,14 @@
             syncCSSGridProperties();
         }
 
-        function saveProjectStateToStorage() {
-            localStorage.setItem('koder_map_matrix_data', JSON.stringify(mapData));
-            localStorage.setItem('koder_map_rows', gridRows);
-            localStorage.setItem('koder_map_cols', gridCols);
-            localStorage.setItem('koder_monster_pools', JSON.stringify(monsterPools));
-        }
+function saveProjectStateToStorage() {
+    localStorage.setItem(`map_${currentSaveSlot}`, JSON.stringify(mapData));
+    localStorage.setItem(`rows_${currentSaveSlot}`, gridRows);
+    localStorage.setItem(`cols_${currentSaveSlot}`, gridCols);
+    localStorage.setItem(`monsters_${currentSaveSlot}`, JSON.stringify(monsterPools));
+
+    logMessage("💾 Map saved.");
+}
 
         function initializeMapMatrix() {
             mapData = [];
