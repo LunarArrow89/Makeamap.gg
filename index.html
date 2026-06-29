@@ -11,20 +11,19 @@
             --grid-rows: 3;
         }
         body { 
-            background: #121212; color: #fff; 
+            background: #e5e5ea; color: #1c1c1e; 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             margin: 0; padding: calc(10px + var(--safe-top)) 12px 15px 12px; 
             -webkit-tap-highlight-color: transparent; 
             box-sizing: border-box;
         }
-        h2 { margin: 0 0 10px 0; font-size: 18px; text-align: center; font-weight: 700; }
+        h2 { margin: 0 0 10px 0; font-size: 18px; text-align: center; font-weight: 700; color: #000; }
         
         .grid-menu { display: grid; gap: 6px; margin-bottom: 10px; width: 100%; box-sizing: border-box; }
-        .modes-grid { grid-template-columns: repeat(3, 1fr); background: #222; padding: 4px; border-radius: 10px; }
-        .size-grid { grid-template-columns: repeat(4, 1fr); }
-        .io-grid { grid-template-columns: repeat(3, 1fr); }
+        .modes-grid { grid-template-columns: repeat(3, 1fr); background: #d1d1d6; padding: 4px; border-radius: 10px; }
+        .size-control-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
         
-        .palette-grid { grid-template-columns: repeat(3, 1fr); background: #1c1c1e; padding: 6px; border-radius: 10px; border: 1px solid #2c2c2e; display: grid; }
+        .palette-grid { grid-template-columns: repeat(3, 1fr); background: #f2f2f7; padding: 6px; border-radius: 10px; border: 1px solid #c7c7cc; display: grid; }
         .palette-grid button { font-size: 11px; padding: 8px 2px; text-transform: uppercase; margin: 2px; }
         
         button, .node-target { 
@@ -35,25 +34,34 @@
         }
         
         button {
-            background: #2c2c2e; color: white; border: none; padding: 12px 2px; 
+            background: #aeaeacf2; color: #000; border: none; padding: 12px 2px; 
             border-radius: 8px; font-weight: 700; font-size: 12px; transition: background 0.2s ease;
         }
+        .modes-grid button { background: #e5e5ea; color: #1c1c1e; }
         button.active { background: #00bcd4; color: #000; }
         
-        button#brush-Combat-1.active { background: #ff453a; color: #fff; }
-        button#brush-Combat-3.active { background: #ff453a; color: #fff; box-shadow: 0 0 8px #ff453a; }
-        button#brush-Combat-5.active { background: #ff453a; color: #fff; }
-        button#brush-Elite-1.active { background: #bf5af2; color: #fff; }
-        button#brush-Elite-3.active { background: #bf5af2; color: #fff; }
-        button#brush-Elite-5.active { background: #bf5af2; color: #fff; }
-        button#brush-Mystery.active { background: #ffd60a; color: #000; }
-        button#brush-Shop.active { background: #0a84ff; color: white; }
-        button#brush-Boss.active { background: #ff375f; color: white; }
-        button#brush-Empty.active { background: #48484a; color: #fff; border: 1px dashed #fff; }
+        /* Grid Size Buttons Modification Style */
+        button.size-btn { background: #007aff; color: #fff; padding: 10px 2px; font-size: 11px; }
+        button.size-btn:active { background: #0056b3; }
+        
+        button#brush-Combat-1.active { background: #ff3b30; color: #fff; }
+        button#brush-Combat-2.active { background: #ff3b30; color: #fff; }
+        button#brush-Combat-3.active { background: #ff3b30; color: #fff; box-shadow: 0 0 8px #ff3b30; }
+        button#brush-Combat-4.active { background: #ff3b30; color: #fff; }
+        button#brush-Combat-5.active { background: #ff3b30; color: #fff; }
+        button#brush-Elite-1.active { background: #af52de; color: #fff; }
+        button#brush-Elite-2.active { background: #af52de; color: #fff; }
+        button#brush-Elite-3.active { background: #af52de; color: #fff; }
+        button#brush-Elite-4.active { background: #af52de; color: #fff; }
+        button#brush-Elite-5.active { background: #af52de; color: #fff; }
+        button#brush-Mystery.active { background: #ffcc00; color: #000; }
+        button#brush-Shop.active { background: #007aff; color: white; }
+        button#brush-Boss.active { background: #ff2d55; color: white; }
+        button#brush-Empty.active { background: #8e8e93; color: #fff; border: 1px dashed #fff; }
         
         #map-outer-wrapper { 
-            width: 100%; overflow: auto; border: 2px solid #2c2c2e; 
-            border-radius: 12px; background: #000; -webkit-overflow-scrolling: touch; 
+            width: 100%; overflow: auto; border: 2px solid #c7c7cc; 
+            border-radius: 12px; background: #fafafa; -webkit-overflow-scrolling: touch; 
             margin-bottom: 10px; box-sizing: border-box;
         }
         #map-container { 
@@ -68,48 +76,41 @@
         
         .node-target { 
             width: 100%; height: 100%; text-align: center; border-radius: 10px; 
-            font-weight: 700; z-index: 2; box-shadow: 0 4px 8px rgba(0,0,0,0.5); 
+            font-weight: 700; z-index: 2; box-shadow: 0 4px 6px rgba(0,0,0,0.15); 
             border: 2px solid transparent; box-sizing: border-box;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: #fff; padding: 0; margin: 0; background: #2c2c2e;
+            color: #fff; padding: 2px; margin: 0; background: #e5e5ea;
             position: relative; pointer-events: auto !important;
         }
-        .node-target span { pointer-events: none !important; user-select: none !important; }
-        .node-main { font-size: 11px; line-height: 1.2; }
-        .node-sub { font-size: 9px; opacity: 0.75; margin-top: 1px; }
+        .node-main { font-size: 11px; line-height: 1.2; text-transform: uppercase; }
+        .node-sub { font-size: 9px; opacity: 0.85; margin-top: 1px; }
+        .node-rolled { font-size: 9px; color: #ffcc00; margin-top: 2px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 120px; }
 
-        .node-target.Empty { background: #2c2c2e; color: #8e8e93; border: 2px dashed #48484a; }
-        .node-target.Combat { background: #ff453a; color: white; }
-        .node-target.Elite { background: #bf5af2; color: white; }
-        .node-target.Mystery { background: #ffd60a; color: black; }
-        .node-target.Shop { background: #0a84ff; color: white; }
-        .node-target.Boss { background: #ff375f; color: white; }
+        .node-target.Empty { background: #fff; color: #8e8e93; border: 2px dashed #c7c7cc; box-shadow: none; }
+        .node-target.Combat { background: #ff3b30; color: white; }
+        .node-target.Elite { background: #af52de; color: white; }
+        .node-target.Mystery { background: #ffcc00; color: black; }
+        .node-target.Shop { background: #007aff; color: white; }
+        .node-target.Boss { background: #ff2d55; color: white; }
         
-        .node-target.current { border-color: #30d158 !important; box-shadow: 0 0 12px #30d158 !important; }
-        .node-target.selectable { border-color: #64d2ff !important; animation: pulse 1.5s infinite; }
+        .deck-editor-card { background: #f2f2f7; border: 1px solid #c7c7cc; padding: 12px; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; }
+        .deck-select-row { display: flex; gap: 8px; margin-bottom: 8px; }
+        .deck-select-row select { flex: 1; background: #fff; color: #000; border: 1px solid #c7c7cc; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 13px; }
         
-        .path-indicator {
-            position: absolute; font-size: 10px; color: #48484a; background: rgba(0,0,0,0.6);
-            padding: 1px 4px; border-radius: 4px; border: 1px solid #2c2c2e;
-            bottom: -15px; left: 50%; transform: translateX(-50%); z-index: 3;
-            pointer-events: none; white-space: nowrap; font-weight: normal;
-        }
-        .node-target.current .path-indicator { color: #64d2ff; border-color: #64d2ff; }
-
         textarea { 
-            width: 100%; height: 75px; background: #1c1c1e; color: #64d2ff; 
-            border: 1px solid #2c2c2e; border-radius: 8px; font-family: monospace; 
+            width: 100%; height: 75px; background: #fff; color: #007aff; 
+            border: 1px solid #c7c7cc; border-radius: 8px; font-family: monospace; 
             padding: 8px; box-sizing: border-box; resize: none; font-size: 11px; 
             -webkit-appearance: none; 
         }
+        .deck-editor-card textarea { height: 90px; color: #000; background: #fff; }
         #log { 
-            background: #000; padding: 10px; border-radius: 8px; 
-            font-family: monospace; height: 100px; overflow-y: auto; color: #30d158; 
-            font-size: 11px; border: 1px solid #2c2c2e; box-sizing: border-box; margin-bottom: 10px;
+            background: #fff; padding: 10px; border-radius: 8px; 
+            font-family: monospace; height: 100px; overflow-y: auto; color: #34c759; 
+            font-size: 11px; border: 1px solid #c7c7cc; box-sizing: border-box; margin-bottom: 10px;
         }
         
-        h3 { font-size: 11px; margin: 10px 0 4px 0; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(100,210,255,0.6); } 70% { box-shadow: 0 0 0 10px rgba(100,210,255,0); } 100% { box-shadow: 0 0 0 0 rgba(100,210,255,0); } }
+        h3 { font-size: 11px; margin: 10px 0 4px 0; color: #636366; text-transform: uppercase; letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
@@ -123,14 +124,27 @@
         <button id="btn-play" onclick="setMode('play')">🎮 Playtest</button>
     </div>
 
+    <!-- Size Control Board Buttons -->
+    <h3>📐 Canvas Structural Tuning</h3>
+    <div class="grid-menu size-control-grid">
+        <button class="size-btn" onclick="adjustGridSize('row', 1)">➕ Add Row</button>
+        <button class="size-btn" onclick="adjustGridSize('row', -1)">➖ Remove Row</button>
+        <button class="size-btn" onclick="adjustGridSize('col', 1)">➕ Add Column</button>
+        <button class="size-btn" onclick="adjustGridSize('col', -1)">➖ Remove Column</button>
+    </div>
+
     <!-- Paint Palette Grid -->
     <div id="paint-palette" class="grid-menu palette-grid">
-        <button id="brush-Combat-1" class="active" onclick="selectBrush('Combat', 1)">Combat Lvl 1</button>
-        <button id="brush-Combat-3" onclick="selectBrush('Combat', 3)">Combat Lvl 3</button>
-        <button id="brush-Combat-5" onclick="selectBrush('Combat', 5)">Combat Lvl 5</button>
-        <button id="brush-Elite-1" onclick="selectBrush('Elite', 1)">Elite Lvl 1</button>
-        <button id="brush-Elite-3" onclick="selectBrush('Elite', 3)">Elite Lvl 3</button>
-        <button id="brush-Elite-5" onclick="selectBrush('Elite', 5)">Elite Lvl 5</button>
+        <button id="brush-Combat-1" class="active" onclick="selectBrush('Combat', 1)">C-Lvl 1</button>
+        <button id="brush-Combat-2" onclick="selectBrush('Combat', 2)">C-Lvl 2</button>
+        <button id="brush-Combat-3" onclick="selectBrush('Combat', 3)">C-Lvl 3</button>
+        <button id="brush-Combat-4" onclick="selectBrush('Combat', 4)">C-Lvl 4</button>
+        <button id="brush-Combat-5" onclick="selectBrush('Combat', 5)">C-Lvl 5</button>
+        <button id="brush-Elite-1" onclick="selectBrush('Elite', 1)">E-Lvl 1</button>
+        <button id="brush-Elite-2" onclick="selectBrush('Elite', 2)">E-Lvl 2</button>
+        <button id="brush-Elite-3" onclick="selectBrush('Elite', 3)">E-Lvl 3</button>
+        <button id="brush-Elite-4" onclick="selectBrush('Elite', 4)">E-Lvl 4</button>
+        <button id="brush-Elite-5" onclick="selectBrush('Elite', 5)">E-Lvl 5</button>
         <button id="brush-Mystery" onclick="selectBrush('Mystery', null)">Mystery</button>
         <button id="brush-Shop" onclick="selectBrush('Shop', null)">Shop</button>
         <button id="brush-Boss" onclick="selectBrush('Boss', null)">Boss</button>
@@ -142,47 +156,140 @@
         <div id="map-container"></div>
     </div>
 
+    <!-- Dynamic Monster List Editor Panel -->
+    <h3>📋 Monster Pool Database Editor</h3>
+    <div class="deck-editor-card">
+        <div class="deck-select-row">
+            <select id="monster-tier-select" onchange="loadTierPool()">
+                <option value="1">Tier Pool Level 1 (Low Danger)</option>
+                <option value="2">Tier Pool Level 2</option>
+                <option value="3">Tier Pool Level 3</option>
+                <option value="4">Tier Pool Level 4</option>
+                <option value="5">Tier Pool Level 5 (High Danger)</option>
+            </select>
+        </div>
+        <textarea id="monster-raw-input" oninput="saveTierPool()" placeholder="Enter one monster name per line..."></textarea>
+    </div>
+
     <!-- Console Logging Window -->
     <h3>System Console Logs</h3>
-    <div id="log">Engine fully loaded. Select a painting mode above to start sculpting your grid layout.</div>
+    <div id="log">Engine fully loaded. Select adjustments or tools above.</div>
 
     <!-- Live Data JSON Output Window -->
     <h3>Map Schema Output (JSON)</h3>
-    <textarea id="json-output" readonly placeholder="Interactive JSON generation schema will render inside here..."></textarea>
-
-<script>
+    <textarea id="json-output" readonly placeholder="Schema details map engine logs..."></textarea>
+    <script>
         // System Engine State Data Configuration
         let currentMode = 'edit';
         let currentBrush = { type: 'Combat', level: 1 };
-        const gridCols = 5;
-        const gridRows = 3;
+        let gridCols = 5;
+        let gridRows = 3;
+
+        // Centralized Tier Pool Configuration
+        let monsterPools = {
+            "1": "Slime\nGoblin Scout\nWild Rat\nBat Cluster",
+            "2": "Orc Warrior\nZombie Fighter\nSkeleton Archer\nPoison Snake",
+            "3": "Gargoyle\nFire Elemental\nIce Golem\nShadow Stalker",
+            "4": "Wyvern\nChimera\nNecromancer\nDark Knight",
+            "5": "Ancient Dragon\nBeholder\nLich Lord\nKraken Spawn"
+        };
         
-        // Setup structural memory matrix map
+        // Setup initial memory array matrix configuration 
         let mapData = [];
-        for (let r = 0; r < gridRows; r++) {
-            let rowArray = [];
-            for (let c = 0; c < gridCols; c++) {
-                rowArray.push({
-                    id: `node-${r}-${c}`,
-                    row: r,
-                    col: c,
-                    type: 'Empty',
-                    level: null,
-                    links: []
-                });
+        initializeMapMatrix();
+
+        function initializeMapMatrix() {
+            mapData = [];
+            for (let r = 0; r < gridRows; r++) {
+                let rowArray = [];
+                for (let c = 0; c < gridCols; c++) {
+                    rowArray.push(createNewNode(r, c));
+                }
+                mapData.push(rowArray);
             }
-            mapData.push(rowArray);
         }
 
-        // Initialize Core Structural Elements
-        const mapContainer = document.getElementById('map-container');
-        document.documentElement.style.setProperty('--grid-cols', gridCols);
-        document.documentElement.style.setProperty('--grid-rows', gridRows);
+        function createNewNode(r, c) {
+            return {
+                id: `node-${r}-${c}`,
+                row: r,
+                col: c,
+                type: 'Empty',
+                level: null,
+                rolledEnemy: null,
+                links: []
+            };
+        }
+
+        // Custom Resize handler module - resizes map safely without wiping existing configurations
+        function adjustGridSize(dimension, change) {
+            if (dimension === 'row') {
+                const targetRows = gridRows + change;
+                if (targetRows < 1) { logMessage("⚠️ Blocked: Map must retain at least 1 Row."); return; }
+                
+                if (change > 0) {
+                    // Injecting new row onto bottom baseline index
+                    let newRowArray = [];
+                    for(let c=0; c < gridCols; c++) {
+                        newRowArray.push(createNewNode(gridRows, c));
+                    }
+                    mapData.push(newRowArray);
+                } else {
+                    // Safe pop last row tracking
+                    mapData.pop();
+                }
+                gridRows = targetRows;
+            } else if (dimension === 'col') {
+                const targetCols = gridCols + change;
+                if (targetCols < 1) { logMessage("⚠️ Blocked: Map must retain at least 1 Column."); return; }
+                
+                if (change > 0) {
+                    // Push safe tracking items out right edge
+                    for(let r=0; r < gridRows; r++) {
+                        mapData[r].push(createNewNode(r, gridCols));
+                    }
+                } else {
+                    // Pop edge entries out
+                    for(let r=0; r < gridRows; r++) {
+                        mapData[r].pop();
+                    }
+                }
+                gridCols = targetCols;
+            }
+            
+            // Sync engine properties parameters down
+            document.documentElement.style.setProperty('--grid-cols', gridCols);
+            document.documentElement.style.setProperty('--grid-rows', gridRows);
+            logMessage(`Grid adjusted. Dimensional sizes updated to: ${gridRows} Rows x ${gridCols} Columns.`);
+            
+            renderMapGrid();
+            updateJSONDisplay();
+        }
 
         function logMessage(msg) {
             const logBox = document.getElementById('log');
             logBox.innerHTML += `<br>> ${msg}`;
             logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        function loadTierPool() {
+            const currentTier = document.getElementById('monster-tier-select').value;
+            document.getElementById('monster-raw-input').value = monsterPools[currentTier];
+        }
+
+        function saveTierPool() {
+            const currentTier = document.getElementById('monster-tier-select').value;
+            monsterPools[currentTier] = document.getElementById('monster-raw-input').value;
+        }
+
+        function getRandomMonster(level) {
+            const tierKey = String(level || 1);
+            const poolText = monsterPools[tierKey] || "";
+            const monsterArray = poolText.split('\n').map(m => m.trim()).filter(m => m.length > 0);
+            
+            if (monsterArray.length === 0) return "Unknown Entity";
+            const randomIndex = Math.floor(Math.random() * monsterArray.length);
+            return monsterArray[randomIndex];
         }
 
         function setMode(mode) {
@@ -214,20 +321,26 @@
             logMessage(`Active tool updated to: ${type} ${level ? '(Lvl ' + level + ')' : ''}`);
         }
 
-        // Handle structural block interactions
         function handleNodeInteraction(row, col) {
             let targetNode = mapData[row][col];
             
             if (currentMode === 'edit') {
                 targetNode.type = currentBrush.type;
                 targetNode.level = currentBrush.level;
+                targetNode.rolledEnemy = null;
                 logMessage(`Painted Node [${row},${col}] as ${targetNode.type}`);
             } 
             else if (currentMode === 'link') {
                 logMessage(`Link logic requested for Node [${row},${col}]`);
             } 
             else if (currentMode === 'playtest') {
-                logMessage(`Playtesting interaction structural trace at Node [${row},${col}]`);
+                if (targetNode.type === 'Combat' || targetNode.type === 'Elite') {
+                    const selectedEnemy = getRandomMonster(targetNode.level);
+                    targetNode.rolledEnemy = selectedEnemy;
+                    logMessage(`🎲 Rolled combat target at Node [${row},${col}]: **${selectedEnemy}** (Lvl ${targetNode.level || 1})`);
+                } else {
+                    logMessage(`Stepped onto ${targetNode.type} space at Node [${row},${col}]`);
+                }
             }
             
             renderMapGrid();
@@ -238,7 +351,6 @@
             document.getElementById('json-output').value = JSON.stringify(mapData, null, 2);
         }
 
-        // UI Builder Rendering Logic Pipeline
         function renderMapGrid() {
             mapContainer.innerHTML = '';
             for (let r = 0; r < gridRows; r++) {
@@ -252,9 +364,11 @@
                     if(node.level) {
                         innerContent += `<div class="node-sub">LVL ${node.level}</div>`;
                     }
+                    if(node.rolledEnemy) {
+                        innerContent += `<div class="node-rolled">👾 ${node.rolledEnemy}</div>`;
+                    }
                     element.innerHTML = innerContent;
                     
-                    // Unified Touch + Click Event Hook Integration
                     element.addEventListener('click', (e) => {
                         e.preventDefault();
                         handleNodeInteraction(r, c);
@@ -266,6 +380,9 @@
         }
 
         // Run Initial Build Configuration Setup
+        document.documentElement.style.setProperty('--grid-cols', gridCols);
+        document.documentElement.style.setProperty('--grid-rows', gridRows);
+        loadTierPool();
         renderMapGrid();
         updateJSONDisplay();
     </script>
