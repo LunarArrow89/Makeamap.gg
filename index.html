@@ -402,8 +402,31 @@ function saveProjectStateToStorage() {
                 targetNode.rolledEnemy = null;
                 logMessage(`Painted Node [${row},${col}] as ${targetNode.type}`);
             } 
-            else if (currentMode === 'link') {
-                logMessage(`Link logic requested for Node [${row},${col}]`);
+else if (currentMode === 'link') {
+
+    if (!window._linkStart) {
+        window._linkStart = { row, col };
+        logMessage(`🔗 Start link at [${row},${col}]`);
+        return;
+    }
+
+    const start = window._linkStart;
+    const end = { row, col };
+
+    if (!mapData[start.row][start.col].links) {
+        mapData[start.row][start.col].links = [];
+    }
+
+    mapData[start.row][start.col].links.push(end);
+
+    logMessage(`🔗 Linked [${start.row},${start.col}] → [${row},${col}]`);
+
+    window._linkStart = null;
+
+    saveProjectStateToStorage();
+    renderMapGrid();
+    updateJSONDisplay();
+}
             } 
             else if (currentMode === 'playtest') {
                 if (targetNode.type === 'Combat' || targetNode.type === 'Elite') {
@@ -443,6 +466,9 @@ function saveProjectStateToStorage() {
                         innerContent += `<div class="node-rolled">👾 ${node.rolledEnemy}</div>`;
                     }
                     element.innerHTML = innerContent;
+                    if (node.links && node.links.length > 0) {
+    element.style.outline = "2px solid #00bcd4";
+}
                     
                     // Fixed: Safe scoped loop indexes to guarantee clicks map to the accurate block
                     (function(row, col) {
