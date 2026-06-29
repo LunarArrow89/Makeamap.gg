@@ -58,15 +58,21 @@
         button#brush-Boss.active { background: #ff375f; color: white; }
         button#brush-Empty.active { background: #48484a; color: #fff; border: 1px dashed #fff; }
         
-        #map-outer-wrapper { 
-            width: 100%; overflow: auto; border: 2px solid #3a3a3c; 
+#map-outer-wrapper{
+
+    width:100%;
+    overflow:auto;
+    touch-action:pan-x pan-y;
+    -webkit-overflow-scrolling:touch;
+
+} border: 2px solid #3a3a3c; 
             border-radius: 12px; background: #121212; -webkit-overflow-scrolling: touch; 
             margin-bottom: 10px; box-sizing: border-box;
         }
         #map-container { 
             display: grid;
-            grid-template-columns: repeat(var(--grid-cols), 140px);
-            grid-template-rows: repeat(var(--grid-rows), 75px);
+            grid-template-columns: repeat(var(--grid-cols), minmax(100px,130px));
+            grid-template-rows: repeat(var(--grid-rows), minmax(75px,100px));
             gap: 25px 35px;
             padding: 25px;
             width: max-content;
@@ -75,7 +81,8 @@
             background-size: 20px 20px;
         }
         
-        .node-target { 
+        .node-target touch-action: manipulation;
+min-height:75px; { 
             width: 100%; height: 100%; text-align: center; border-radius: 10px; 
             font-weight: 700; z-index: 2; box-shadow: 0 4px 8px rgba(0,0,0,0.4); 
             border: 2px solid transparent; box-sizing: border-box;
@@ -153,6 +160,23 @@
     </div>
 
     <!-- Dynamic Interactive Map View -->
+    <!-- Dynamic Interactive Map View -->
+
+<div style="display:flex; gap:10px; margin-bottom:10px;">
+
+    <button onclick="saveProjectStateToStorage()">
+        💾 Save
+    </button>
+
+    <button onclick="loadSavedProjectState(); renderMapGrid();">
+        📂 Load
+    </button>
+
+</div>
+
+<div id="map-outer-wrapper">
+    <div id="map-container"></div>
+</div>
     <div id="map-outer-wrapper">
         <div id="map-container"></div>
     </div>
@@ -201,10 +225,28 @@
         let currentSaveSlot = 1;
 
         // Load map structure history configuration if present
-        function loadSavedProjectState() {
-            const savedMap = localStorage.getItem('koder_map_matrix_data');
-            const savedRows = localStorage.getItem('koder_map_rows');
-            const savedCols = localStorage.getItem('koder_map_cols');
+function loadSavedProjectState() {
+
+    const savedMap = localStorage.getItem(`map_${currentSaveSlot}`);
+    const savedRows = localStorage.getItem(`rows_${currentSaveSlot}`);
+    const savedCols = localStorage.getItem(`cols_${currentSaveSlot}`);
+
+    if(savedMap){
+
+        gridRows = parseInt(savedRows);
+        gridCols = parseInt(savedCols);
+
+        mapData = JSON.parse(savedMap);
+
+    }else{
+
+        initializeMapMatrix();
+
+    }
+
+    syncCSSGridProperties();
+
+}
 
             if (savedMap && savedRows && savedCols) {
                 gridRows = parseInt(savedRows, 10);
