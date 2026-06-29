@@ -11,19 +11,19 @@
             --grid-rows: 3;
         }
         body { 
-            background: #e5e5ea; color: #1c1c1e; 
+            background: #1c1c1e; color: #fff; 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             margin: 0; padding: calc(10px + var(--safe-top)) 12px 15px 12px; 
             -webkit-tap-highlight-color: transparent; 
             box-sizing: border-box;
         }
-        h2 { margin: 0 0 10px 0; font-size: 18px; text-align: center; font-weight: 700; color: #000; }
+        h2 { margin: 0 0 10px 0; font-size: 18px; text-align: center; font-weight: 700; color: #fff; }
         
         .grid-menu { display: grid; gap: 6px; margin-bottom: 10px; width: 100%; box-sizing: border-box; }
-        .modes-grid { grid-template-columns: repeat(3, 1fr); background: #d1d1d6; padding: 4px; border-radius: 10px; }
+        .modes-grid { grid-template-columns: repeat(3, 1fr); background: #2c2c2e; padding: 4px; border-radius: 10px; }
         .size-control-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
         
-        .palette-grid { grid-template-columns: repeat(3, 1fr); background: #f2f2f7; padding: 6px; border-radius: 10px; border: 1px solid #c7c7cc; display: grid; }
+        .palette-grid { grid-template-columns: repeat(3, 1fr); background: #2c2c2e; padding: 6px; border-radius: 10px; border: 1px solid #3a3a3c; display: grid; }
         .palette-grid button { font-size: 11px; padding: 8px 2px; text-transform: uppercase; margin: 2px; }
         
         button, .node-target { 
@@ -34,34 +34,33 @@
         }
         
         button {
-            background: #aeaeacf2; color: #000; border: none; padding: 12px 2px; 
+            background: #3a3a3c; color: #fff; border: none; padding: 12px 2px; 
             border-radius: 8px; font-weight: 700; font-size: 12px; transition: background 0.2s ease;
         }
-        .modes-grid button { background: #e5e5ea; color: #1c1c1e; }
+        .modes-grid button { background: #3a3a3c; color: #fff; }
         button.active { background: #00bcd4; color: #000; }
         
-        /* Grid Size Buttons Modification Style */
-        button.size-btn { background: #007aff; color: #fff; padding: 10px 2px; font-size: 11px; }
+        button.size-btn { background: #0a84ff; color: #fff; padding: 10px 2px; font-size: 11px; }
         button.size-btn:active { background: #0056b3; }
         
-        button#brush-Combat-1.active { background: #ff3b30; color: #fff; }
-        button#brush-Combat-2.active { background: #ff3b30; color: #fff; }
-        button#brush-Combat-3.active { background: #ff3b30; color: #fff; box-shadow: 0 0 8px #ff3b30; }
-        button#brush-Combat-4.active { background: #ff3b30; color: #fff; }
-        button#brush-Combat-5.active { background: #ff3b30; color: #fff; }
-        button#brush-Elite-1.active { background: #af52de; color: #fff; }
-        button#brush-Elite-2.active { background: #af52de; color: #fff; }
-        button#brush-Elite-3.active { background: #af52de; color: #fff; }
-        button#brush-Elite-4.active { background: #af52de; color: #fff; }
-        button#brush-Elite-5.active { background: #af52de; color: #fff; }
-        button#brush-Mystery.active { background: #ffcc00; color: #000; }
-        button#brush-Shop.active { background: #007aff; color: white; }
-        button#brush-Boss.active { background: #ff2d55; color: white; }
-        button#brush-Empty.active { background: #8e8e93; color: #fff; border: 1px dashed #fff; }
+        button#brush-Combat-1.active { background: #ff453a; color: #fff; }
+        button#brush-Combat-2.active { background: #ff453a; color: #fff; }
+        button#brush-Combat-3.active { background: #ff453a; color: #fff; box-shadow: 0 0 8px #ff453a; }
+        button#brush-Combat-4.active { background: #ff453a; color: #fff; }
+        button#brush-Combat-5.active { background: #ff453a; color: #fff; }
+        button#brush-Elite-1.active { background: #bf5af2; color: #fff; }
+        button#brush-Elite-2.active { background: #bf5af2; color: #fff; }
+        button#brush-Elite-3.active { background: #bf5af2; color: #fff; }
+        button#brush-Elite-4.active { background: #bf5af2; color: #fff; }
+        button#brush-Elite-5.active { background: #bf5af2; color: #fff; }
+        button#brush-Mystery.active { background: #ffd60a; color: #000; }
+        button#brush-Shop.active { background: #0a84ff; color: white; }
+        button#brush-Boss.active { background: #ff375f; color: white; }
+        button#brush-Empty.active { background: #48484a; color: #fff; border: 1px dashed #fff; }
         
         #map-outer-wrapper { 
-            width: 100%; overflow: auto; border: 2px solid #c7c7cc; 
-            border-radius: 12px; background: #fafafa; -webkit-overflow-scrolling: touch; 
+            width: 100%; overflow: auto; border: 2px solid #3a3a3c; 
+            border-radius: 12px; background: #121212; -webkit-overflow-scrolling: touch; 
             margin-bottom: 10px; box-sizing: border-box;
         }
         #map-container { 
@@ -72,45 +71,47 @@
             padding: 25px;
             width: max-content;
             height: max-content;
+            background-image: radial-gradient(#3a3a3c 2px, transparent 2px);
+            background-size: 20px 20px;
         }
         
         .node-target { 
             width: 100%; height: 100%; text-align: center; border-radius: 10px; 
-            font-weight: 700; z-index: 2; box-shadow: 0 4px 6px rgba(0,0,0,0.15); 
+            font-weight: 700; z-index: 2; box-shadow: 0 4px 8px rgba(0,0,0,0.4); 
             border: 2px solid transparent; box-sizing: border-box;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: #fff; padding: 2px; margin: 0; background: #e5e5ea;
+            color: #fff; padding: 2px; margin: 0; background: #2c2c2e;
             position: relative; pointer-events: auto !important;
         }
         .node-main { font-size: 11px; line-height: 1.2; text-transform: uppercase; }
-        .node-sub { font-size: 9px; opacity: 0.85; margin-top: 1px; }
-        .node-rolled { font-size: 9px; color: #ffcc00; margin-top: 2px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 120px; }
+        .node-sub { font-size: 9px; opacity: 0.75; margin-top: 1px; }
+        .node-rolled { font-size: 9px; color: #ffd60a; margin-top: 2px; font-weight: normal; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 120px; }
 
-        .node-target.Empty { background: #fff; color: #8e8e93; border: 2px dashed #c7c7cc; box-shadow: none; }
-        .node-target.Combat { background: #ff3b30; color: white; }
-        .node-target.Elite { background: #af52de; color: white; }
-        .node-target.Mystery { background: #ffcc00; color: black; }
-        .node-target.Shop { background: #007aff; color: white; }
-        .node-target.Boss { background: #ff2d55; color: white; }
+        .node-target.Empty { background: #2c2c2e; color: #8e8e93; border: 2px dashed #48484a; box-shadow: none; }
+        .node-target.Combat { background: #ff453a; color: white; }
+        .node-target.Elite { background: #bf5af2; color: white; }
+        .node-target.Mystery { background: #ffd60a; color: black; }
+        .node-target.Shop { background: #0a84ff; color: white; }
+        .node-target.Boss { background: #ff375f; color: white; }
         
-        .deck-editor-card { background: #f2f2f7; border: 1px solid #c7c7cc; padding: 12px; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; }
+        .deck-editor-card { background: #2c2c2e; border: 1px solid #3a3a3c; padding: 12px; border-radius: 10px; margin-bottom: 10px; box-sizing: border-box; }
         .deck-select-row { display: flex; gap: 8px; margin-bottom: 8px; }
-        .deck-select-row select { flex: 1; background: #fff; color: #000; border: 1px solid #c7c7cc; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 13px; }
+        .deck-select-row select { flex: 1; background: #3a3a3c; color: #fff; border: 1px solid #48484a; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 13px; }
         
         textarea { 
-            width: 100%; height: 75px; background: #fff; color: #007aff; 
-            border: 1px solid #c7c7cc; border-radius: 8px; font-family: monospace; 
+            width: 100%; height: 75px; background: #121212; color: #64d2ff; 
+            border: 1px solid #3a3a3c; border-radius: 8px; font-family: monospace; 
             padding: 8px; box-sizing: border-box; resize: none; font-size: 11px; 
             -webkit-appearance: none; 
         }
-        .deck-editor-card textarea { height: 90px; color: #000; background: #fff; }
+        .deck-editor-card textarea { height: 90px; color: #fff; background: #121212; }
         #log { 
-            background: #fff; padding: 10px; border-radius: 8px; 
-            font-family: monospace; height: 100px; overflow-y: auto; color: #34c759; 
-            font-size: 11px; border: 1px solid #c7c7cc; box-sizing: border-box; margin-bottom: 10px;
+            background: #000; padding: 10px; border-radius: 8px; 
+            font-family: monospace; height: 100px; overflow-y: auto; color: #30d158; 
+            font-size: 11px; border: 1px solid #3a3a3c; box-sizing: border-box; margin-bottom: 10px;
         }
         
-        h3 { font-size: 11px; margin: 10px 0 4px 0; color: #636366; text-transform: uppercase; letter-spacing: 0.5px; }
+        h3 { font-size: 11px; margin: 10px 0 4px 0; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
@@ -177,7 +178,6 @@
 
     <!-- Live Data JSON Output Window -->
     <h3>Map Schema Output (JSON)</h3>
-    <textarea id="json-output" readonly placeholder="Schema details map engine logs..."></textarea>
     <script>
         // System Engine State Data Configuration
         let currentMode = 'edit';
@@ -185,8 +185,8 @@
         let gridCols = 5;
         let gridRows = 3;
 
-        // Centralized Tier Pool Configuration
-        let monsterPools = {
+        // Centralized Tier Pool Configuration Fallbacks
+        let defaultMonsterPools = {
             "1": "Slime\nGoblin Scout\nWild Rat\nBat Cluster",
             "2": "Orc Warrior\nZombie Fighter\nSkeleton Archer\nPoison Snake",
             "3": "Gargoyle\nFire Elemental\nIce Golem\nShadow Stalker",
@@ -194,9 +194,32 @@
             "5": "Ancient Dragon\nBeholder\nLich Lord\nKraken Spawn"
         };
         
-        // Setup initial memory array matrix configuration 
+        let monsterPools = JSON.parse(localStorage.getItem('koder_monster_pools')) || defaultMonsterPools;
         let mapData = [];
-        initializeMapMatrix();
+
+        // Load map structure history configuration if present
+        function loadSavedProjectState() {
+            const savedMap = localStorage.getItem('koder_map_matrix_data');
+            const savedRows = localStorage.getItem('koder_map_rows');
+            const savedCols = localStorage.getItem('koder_map_cols');
+
+            if (savedMap && savedRows && savedCols) {
+                gridRows = parseInt(savedRows, 10);
+                gridCols = parseInt(savedCols, 10);
+                mapData = JSON.parse(savedMap);
+                logMessage("💾 Loaded your saved map from local browser storage automatically.");
+            } else {
+                initializeMapMatrix();
+            }
+            syncCSSGridProperties();
+        }
+
+        function saveProjectStateToStorage() {
+            localStorage.setItem('koder_map_matrix_data', JSON.stringify(mapData));
+            localStorage.setItem('koder_map_rows', gridRows);
+            localStorage.setItem('koder_map_cols', gridCols);
+            localStorage.setItem('koder_monster_pools', JSON.stringify(monsterPools));
+        }
 
         function initializeMapMatrix() {
             mapData = [];
@@ -221,21 +244,24 @@
             };
         }
 
-        // Custom Resize handler module - resizes map safely without wiping existing configurations
+        function syncCSSGridProperties() {
+            document.documentElement.style.setProperty('--grid-cols', gridCols);
+            document.documentElement.style.setProperty('--grid-rows', gridRows);
+        }
+
+        // Fixed Grid Shifter Module: Seamless expansion/reduction tracking
         function adjustGridSize(dimension, change) {
             if (dimension === 'row') {
                 const targetRows = gridRows + change;
                 if (targetRows < 1) { logMessage("⚠️ Blocked: Map must retain at least 1 Row."); return; }
                 
                 if (change > 0) {
-                    // Injecting new row onto bottom baseline index
                     let newRowArray = [];
                     for(let c=0; c < gridCols; c++) {
                         newRowArray.push(createNewNode(gridRows, c));
                     }
                     mapData.push(newRowArray);
                 } else {
-                    // Safe pop last row tracking
                     mapData.pop();
                 }
                 gridRows = targetRows;
@@ -244,12 +270,10 @@
                 if (targetCols < 1) { logMessage("⚠️ Blocked: Map must retain at least 1 Column."); return; }
                 
                 if (change > 0) {
-                    // Push safe tracking items out right edge
                     for(let r=0; r < gridRows; r++) {
                         mapData[r].push(createNewNode(r, gridCols));
                     }
                 } else {
-                    // Pop edge entries out
                     for(let r=0; r < gridRows; r++) {
                         mapData[r].pop();
                     }
@@ -257,11 +281,10 @@
                 gridCols = targetCols;
             }
             
-            // Sync engine properties parameters down
-            document.documentElement.style.setProperty('--grid-cols', gridCols);
-            document.documentElement.style.setProperty('--grid-rows', gridRows);
-            logMessage(`Grid adjusted. Dimensional sizes updated to: ${gridRows} Rows x ${gridCols} Columns.`);
+            syncCSSGridProperties();
+            logMessage(`Grid dimensions updated to: ${gridRows} Rows x ${gridCols} Columns.`);
             
+            saveProjectStateToStorage();
             renderMapGrid();
             updateJSONDisplay();
         }
@@ -280,6 +303,7 @@
         function saveTierPool() {
             const currentTier = document.getElementById('monster-tier-select').value;
             monsterPools[currentTier] = document.getElementById('monster-raw-input').value;
+            saveProjectStateToStorage();
         }
 
         function getRandomMonster(level) {
@@ -343,6 +367,7 @@
                 }
             }
             
+            saveProjectStateToStorage();
             renderMapGrid();
             updateJSONDisplay();
         }
@@ -380,8 +405,7 @@
         }
 
         // Run Initial Build Configuration Setup
-        document.documentElement.style.setProperty('--grid-cols', gridCols);
-        document.documentElement.style.setProperty('--grid-rows', gridRows);
+        loadSavedProjectState();
         loadTierPool();
         renderMapGrid();
         updateJSONDisplay();
